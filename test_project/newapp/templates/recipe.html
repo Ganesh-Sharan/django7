@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Review Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .recipe {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+            background-color: #f9f9f9;
+        }
+
+        .recipe h2 {
+            margin-top: 0;
+        }
+
+        .review-form {
+            margin-top: 1rem;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recipe Review Platform</h1>
+    </header>
+    <main>
+        <section id="recipes">
+
+        </section>
+    </main>
+    <script>
+        const recipesContainer = document.getElementById("recipes");
+
+        const recipes = [
+            {
+                title: "Chocolate Cake",
+                ingredients: "Flour, sugar, cocoa powder, eggs, butter",
+                instructions: "Mix dry ingredients, add wet ingredients, bake at 350°F for 30 minutes",
+                reviews: []
+            },
+            {
+                title: "Lemon Soda",
+                ingredients: "Lemon,Sugar,beaker,soda,salt",
+                instructions: "Squeeze the lemon into a beaker and add suffficient amount of salt and sugar and stir or mix it until the suger and salt gets dissolved",
+                reviews: []
+            },
+            {
+                title: "Mac&Cheese",
+                ingredients: "Butter,Maida,Milk,Macroons,Oregano,Chilli Flakes,Black pepper powder,Salt,Cheese",
+                instructions: "Boil the macroons only in milk and mix all ingredients.Make sure your macroon is cooked well before serving",
+                reviews: []
+            },
+            
+            // Add more recipe objects here
+        ];
+
+        function displayRecipes() {
+            recipesContainer.innerHTML = "";
+            recipes.forEach(recipe => {
+                const recipeDiv = document.createElement("div");
+                recipeDiv.className = "recipe";
+                recipeDiv.innerHTML = `
+                    <h2>${recipe.title}</h2>
+                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                    <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                    <h3>Reviews:</h3>
+                    <ul>
+                        ${recipe.reviews.map(review => `<li>${review}</li>`).join("")}
+                    </ul>
+                    <form class="review-form">
+                        <textarea placeholder="Leave a review"></textarea>
+                        <button type="button" onclick="submitReview(event, ${recipes.indexOf(recipe)})">Submit Review</button>
+                    </form>
+                `;
+                recipesContainer.appendChild(recipeDiv);
+            });
+        }
+
+        function submitReview(event, index) {
+            event.preventDefault();
+            const textarea = event.target.parentElement.querySelector("textarea");
+            const review = textarea.value;
+            if (review.trim() !== "") {
+                recipes[index].reviews.push(review);
+                textarea.value = "";
+                displayRecipes();
+            }
+        }
+
+        displayRecipes();
+    </script>
+</body>
+</html>
