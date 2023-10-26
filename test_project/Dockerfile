@@ -2,12 +2,12 @@ FROM python
 
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /fit
+WORKDIR /newapp
 
-ADD . /fit
+ADD . /newapp
 
-COPY ./requirements.txt /fit/requirements.txt
+COPY ./requirements.txt /newapp/requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY . /fit
+COPY . /newapp
